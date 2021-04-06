@@ -10,6 +10,7 @@ export function handleCreateRefunder(event: CreateRefunder): void {
     refunder = new Refunder(event.params.refunderAddress.toHex());
     refunder.maxGasPrice = constants.BIGINT_ZERO;
     refunder.version = constants.BIGINT_ZERO;
+    refunder.isPaused = false;
   }
 
   refunder.owner = event.params.owner.toHex();

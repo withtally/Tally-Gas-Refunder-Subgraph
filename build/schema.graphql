@@ -7,6 +7,7 @@ type Refunder @entity {
   deposits: [Deposit!]! @derivedFrom(field: "refunder")
   withdrawls: [Withdrawl!]! @derivedFrom(field: "refunder")
   refunds: [Refund!]! @derivedFrom(field: "refunder")
+  isPaused: Boolean!
 }
 
 type Target @entity {

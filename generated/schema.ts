@@ -104,6 +104,15 @@ export class Refunder extends Entity {
   set refunds(value: Array<string>) {
     this.set("refunds", Value.fromStringArray(value));
   }
+
+  get isPaused(): boolean {
+    let value = this.get("isPaused");
+    return value.toBoolean();
+  }
+
+  set isPaused(value: boolean) {
+    this.set("isPaused", Value.fromBoolean(value));
+  }
 }
 
 export class Target extends Entity {

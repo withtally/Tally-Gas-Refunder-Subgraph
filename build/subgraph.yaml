@@ -45,3 +45,36 @@ dataSources:
         - event: CreateRefunder(indexed address,indexed address)
           handler: handleCreateRefunder
       file: Registry/Registry.wasm
+  - kind: ethereum/contract
+    name: Refunder
+    network: mainnet
+    source:
+      address: "0x2E645469f354BB4F5c8a05B3b30A929361cf77eB"
+      abi: Refunder
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Refunder
+      abis:
+        - name: Refunder
+          file: Refunder/abis/Refunder.json
+      eventHandlers:
+        - event: Deposit(indexed address,uint256)
+          handler: handleDeposit
+        - event: GasPriceChange(uint256)
+          handler: handleGasPriceChange
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: RefundableUpdate(indexed address,indexed bytes4,bool,address,bytes4)
+          handler: handleRefundableUpdate
+        - event: RelayAndRefund(indexed address,indexed address,indexed bytes4,uint256)
+          handler: handleRelayAndRefund
+        - event: Unpaused(address)
+          handler: handleUnpaused
+        - event: Withdraw(indexed address,uint256)
+          handler: handleWithdraw
+      file: Registry/Registry.wasm

@@ -10,6 +10,7 @@ export function handleRegister(event: Register): void {
     refunder = new Refunder(event.params.refunder.toHex());
     refunder.maxGasPrice = constants.BIGINT_ZERO;
     refunder.owner = "";
+    refunder.isPaused = false;
   }
 
   refunder.version = BigInt.fromI32(event.params.version);
