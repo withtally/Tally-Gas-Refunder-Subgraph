@@ -1,3 +1,4 @@
+import { BigInt } from '@graphprotocol/graph-ts'
 import { Register, UpdateRefundable } from "../../generated/Registry/Registry";
 import { Refunder, Refundable, Refund } from "../../generated/schema";
 
@@ -10,8 +11,8 @@ export function handleRegister(event: Register): void {
   }
 
   refunder.maxGasPrice = constants.BIGINT_ZERO;
-  refunder.version = event.params.version;
-  
+  refunder.version = BigInt.fromI32(event.params.version);
+
   refunder.save();
 }
 

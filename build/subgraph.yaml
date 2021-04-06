@@ -2,13 +2,13 @@ specVersion: 0.0.2
 description: Gravatar for Ethereum
 repository: https://github.com/graphprotocol/example-subgraph
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: Registry
     network: mainnet
     source:
-      address: '0x2E645469f354BB4F5c8a05B3b30A929361cf77eB'
+      address: "0x2E645469f354BB4F5c8a05B3b30A929361cf77eB"
       abi: Registry
     mapping:
       kind: ethereum/events
@@ -18,10 +18,10 @@ dataSources:
         - Gravatar
       abis:
         - name: Registry
-          file: ./abis/Registry.json
+          file: Registry/abis/Registry.json
       eventHandlers:
         - event: Register(indexed address,uint8)
           handler: handleNewGravatar
         - event: UpdateRefundable(indexed address,indexed address,indexed bytes4,bool)
           handler: handleNewGravatar
-      file: ./src/mapping.ts
+      file: Registry/Registry.wasm

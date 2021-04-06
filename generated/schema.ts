@@ -42,22 +42,22 @@ export class Refunder extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get maxGasPrice(): i32 {
+  get maxGasPrice(): BigInt {
     let value = this.get("maxGasPrice");
-    return value.toI32();
+    return value.toBigInt();
   }
 
-  set maxGasPrice(value: i32) {
-    this.set("maxGasPrice", Value.fromI32(value));
+  set maxGasPrice(value: BigInt) {
+    this.set("maxGasPrice", Value.fromBigInt(value));
   }
 
-  get version(): i32 {
+  get version(): BigInt {
     let value = this.get("version");
-    return value.toI32();
+    return value.toBigInt();
   }
 
-  set version(value: i32) {
-    this.set("version", Value.fromI32(value));
+  set version(value: BigInt) {
+    this.set("version", Value.fromBigInt(value));
   }
 
   get refundables(): Array<string> {
@@ -194,22 +194,38 @@ export class Refundable extends Entity {
     this.set("identifier", Value.fromBytes(value));
   }
 
-  get validatingContract(): Bytes {
+  get validatingContract(): Bytes | null {
     let value = this.get("validatingContract");
-    return value.toBytes();
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
   }
 
-  set validatingContract(value: Bytes) {
-    this.set("validatingContract", Value.fromBytes(value));
+  set validatingContract(value: Bytes | null) {
+    if (value === null) {
+      this.unset("validatingContract");
+    } else {
+      this.set("validatingContract", Value.fromBytes(value as Bytes));
+    }
   }
 
-  get validatingIdentifier(): Bytes {
+  get validatingIdentifier(): Bytes | null {
     let value = this.get("validatingIdentifier");
-    return value.toBytes();
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
   }
 
-  set validatingIdentifier(value: Bytes) {
-    this.set("validatingIdentifier", Value.fromBytes(value));
+  set validatingIdentifier(value: Bytes | null) {
+    if (value === null) {
+      this.unset("validatingIdentifier");
+    } else {
+      this.set("validatingIdentifier", Value.fromBytes(value as Bytes));
+    }
   }
 
   get isRefundable(): boolean {
@@ -306,13 +322,13 @@ export class Refund extends Entity {
     this.set("identifier", Value.fromBytes(value));
   }
 
-  get refund(): i32 {
+  get refund(): BigInt {
     let value = this.get("refund");
-    return value.toI32();
+    return value.toBigInt();
   }
 
-  set refund(value: i32) {
-    this.set("refund", Value.fromI32(value));
+  set refund(value: BigInt) {
+    this.set("refund", Value.fromBigInt(value));
   }
 }
 
@@ -346,13 +362,13 @@ export class Withdrawl extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get value(): i32 {
+  get value(): BigInt {
     let value = this.get("value");
-    return value.toI32();
+    return value.toBigInt();
   }
 
-  set value(value: i32) {
-    this.set("value", Value.fromI32(value));
+  set value(value: BigInt) {
+    this.set("value", Value.fromBigInt(value));
   }
 
   get recipient(): Bytes {
@@ -404,13 +420,13 @@ export class Deposit extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get value(): i32 {
+  get value(): BigInt {
     let value = this.get("value");
-    return value.toI32();
+    return value.toBigInt();
   }
 
-  set value(value: i32) {
-    this.set("value", Value.fromI32(value));
+  set value(value: BigInt) {
+    this.set("value", Value.fromBigInt(value));
   }
 
   get depositor(): Bytes {
