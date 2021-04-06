@@ -69,6 +69,15 @@ export class Refunder extends Entity {
     this.set("version", Value.fromBigInt(value));
   }
 
+  get isPaused(): boolean {
+    let value = this.get("isPaused");
+    return value.toBoolean();
+  }
+
+  set isPaused(value: boolean) {
+    this.set("isPaused", Value.fromBoolean(value));
+  }
+
   get refundables(): Array<string> {
     let value = this.get("refundables");
     return value.toStringArray();
@@ -103,15 +112,6 @@ export class Refunder extends Entity {
 
   set refunds(value: Array<string>) {
     this.set("refunds", Value.fromStringArray(value));
-  }
-
-  get isPaused(): boolean {
-    let value = this.get("isPaused");
-    return value.toBoolean();
-  }
-
-  set isPaused(value: boolean) {
-    this.set("isPaused", Value.fromBoolean(value));
   }
 }
 
@@ -313,31 +313,31 @@ export class Refund extends Entity {
     this.set("refunder", Value.fromString(value));
   }
 
-  get caller(): Bytes {
+  get caller(): string {
     let value = this.get("caller");
-    return value.toBytes();
+    return value.toString();
   }
 
-  set caller(value: Bytes) {
-    this.set("caller", Value.fromBytes(value));
+  set caller(value: string) {
+    this.set("caller", Value.fromString(value));
   }
 
-  get target(): Bytes {
+  get target(): string {
     let value = this.get("target");
-    return value.toBytes();
+    return value.toString();
   }
 
-  set target(value: Bytes) {
-    this.set("target", Value.fromBytes(value));
+  set target(value: string) {
+    this.set("target", Value.fromString(value));
   }
 
-  get identifier(): Bytes {
+  get identifier(): string {
     let value = this.get("identifier");
-    return value.toBytes();
+    return value.toString();
   }
 
-  set identifier(value: Bytes) {
-    this.set("identifier", Value.fromBytes(value));
+  set identifier(value: string) {
+    this.set("identifier", Value.fromString(value));
   }
 
   get refund(): BigInt {

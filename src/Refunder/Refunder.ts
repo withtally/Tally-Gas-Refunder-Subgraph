@@ -15,6 +15,29 @@ import {
 
 import { constants } from "../utils/utils";
 
+export function handleRelayAndRefund(event: RelayAndRefund): void {
+    let target = event.params.target.toHex();
+    let identifier = event.params.identifier.toHex();
+
+    let refundableID = event.address
+    .toHex()
+    .concat("-")
+    .concat(target)
+    .concat("-")
+    .concat(identifier);
+
+    let refund = new Refund(event.transaction.hash.toHex().concat(event.transactionLogIndex.toHex()))
+
+    refund.refundable = refundableID;
+    refund.refunder = event.address.toHex();
+    refund.caller = event.params.caller.toHex();
+    refund.target = target;
+    refund.identifier = identifier;
+    refund.refund = event.params.refundAmount;
+
+    refund.save();
+}
+
 export function handleRefundableUpdate(event: RefundableUpdate): void {
 
     let target = event.params.targetContract.toHex()
@@ -82,16 +105,3 @@ export function handleDeposit(event: Deposit): void {
 
     deposit.save();
 }
-
-
-// export function handleCreateRefunder(event: CreateRefunder): void {
-//   let refunder = Refunder.load(event.params.refunderAddress.toHex());
-//   if (refunder == null) {
-//     refunder = new Refunder(event.params.refunderAddress.toHex());
-//     refunder.maxGasPrice = constants.BIGINT_ZERO;
-//     refunder.version = constants.BIGINT_ZERO;
-//   }
-
-//   refunder.owner = event.params.owner.toHex();
-//   refunder.save();
-// }

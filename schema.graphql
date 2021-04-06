@@ -10,15 +10,10 @@ type Refunder @entity {
   refunds: [Refund!]! @derivedFrom(field: "refunder")
 }
 
-type Target @entity {
-  id: ID!
-  refundables: [Refundable!]! @derivedFrom(field: "target")
-}
-
 type Refundable @entity{
   id: ID! #contract address of Refunder .concat( target) con
   refunder: Refunder!
-  target: Target!
+  target: String!
   identifier: Bytes!
   validatingContract: Bytes
   validatingIdentifier: Bytes
@@ -30,9 +25,9 @@ type Refund @entity {
   id: ID! #tx hash + log index
   refundable: Refundable!
   refunder: Refunder!
-  caller: Bytes!
-  target: Bytes!
-  identifier: Bytes!
+  caller: String!
+  target: String!
+  identifier: String!
   refund: BigInt!
 }
 
