@@ -42,6 +42,15 @@ export class Refunder extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get owner(): string {
+    let value = this.get("owner");
+    return value.toString();
+  }
+
+  set owner(value: string) {
+    this.set("owner", Value.fromString(value));
+  }
+
   get maxGasPrice(): BigInt {
     let value = this.get("maxGasPrice");
     return value.toBigInt();

@@ -1,5 +1,6 @@
 type Refunder @entity {
   id: ID! #contract Address of Refunder
+  owner: String!
   maxGasPrice: BigInt!
   version: BigInt!
   refundables: [Refundable!]! @derivedFrom(field: "refunder")

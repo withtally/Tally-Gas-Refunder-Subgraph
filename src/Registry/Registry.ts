@@ -1,6 +1,6 @@
-import { BigInt } from '@graphprotocol/graph-ts'
+import { BigInt } from "@graphprotocol/graph-ts";
 import { Register, UpdateRefundable } from "../../generated/Registry/Registry";
-import { Refunder, Refundable, Refund } from "../../generated/schema";
+import { Refunder, Refundable } from "../../generated/schema";
 
 import { constants } from "../utils/utils";
 
@@ -8,11 +8,11 @@ export function handleRegister(event: Register): void {
   let refunder = Refunder.load(event.params.refunder.toHex());
   if (refunder == null) {
     refunder = new Refunder(event.params.refunder.toHex());
+    refunder.maxGasPrice = constants.BIGINT_ZERO;
+    refunder.owner = "";
   }
 
-  refunder.maxGasPrice = constants.BIGINT_ZERO;
   refunder.version = BigInt.fromI32(event.params.version);
-
   refunder.save();
 }
 
@@ -34,6 +34,5 @@ export function handleUpdateRefundable(event: UpdateRefundable): void {
   refundable.target = event.params.targetAddress.toHex();
   refundable.identifier = event.params.interfaceId;
   refundable.isRefundable = event.params.supported;
-
   refundable.save();
 }
