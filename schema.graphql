@@ -1,0 +1,45 @@
+type Refunder @entity {
+  id: ID! #contract Address of Refunder
+  registry: Registry!
+  maxGasPrice: Int!
+  refundables: [Refundable!]! @derivedFrom(field: "refunder")
+  deposits: [Deposit!]! @derivedFrom(field: "refunder")
+  withdrawls: [Withdrawl!]! @derivedFrom(field: "refunder")
+  refunds: [Refund!]! @derivedFrom(field: "refunder")
+}
+
+type Refundable @entity{
+  id: ID! #contract address of Refunder .concat(z)
+  refunder: Refunder!
+  target: Bytes!
+  identifier: Bytes!
+  validatingContract: Bytes!
+  validatingIdentifier: Bytes!
+  isRefundable: Bool!
+  targetID: Target!
+  refunds: [Refund!]! @derivedFrom(field: "refundable")
+}
+
+type Refund @entity {
+  id: ID! #tx hash + log index
+  refundable: Refundable!
+  refunder: Refunder!
+  caller: Bytes!
+  target: Bytes!
+  identifier: Bytes!
+  refund: Int!
+}
+
+type Withdrawl @entity {
+  id: ID! #tx hash I suppose + log index
+  value: Int!
+  recipient: Bytes!
+  refunder: Refunder!
+}
+
+type Deposit @entity {
+  id: ID!
+  value: Int!
+  depositor: Bytes!
+  refunder: Refunder!
+}
