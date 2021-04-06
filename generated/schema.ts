@@ -12,7 +12,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class Gravatar extends Entity {
+export class Refunder extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -20,17 +20,17 @@ export class Gravatar extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save Gravatar entity without an ID");
+    assert(id !== null, "Cannot save Refunder entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save Gravatar entity with non-string ID. " +
+      "Cannot save Refunder entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("Gravatar", id.toString(), this);
+    store.set("Refunder", id.toString(), this);
   }
 
-  static load(id: string): Gravatar | null {
-    return store.get("Gravatar", id) as Gravatar | null;
+  static load(id: string): Refunder | null {
+    return store.get("Refunder", id) as Refunder | null;
   }
 
   get id(): string {
@@ -42,30 +42,392 @@ export class Gravatar extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get owner(): Bytes {
-    let value = this.get("owner");
+  get maxGasPrice(): i32 {
+    let value = this.get("maxGasPrice");
+    return value.toI32();
+  }
+
+  set maxGasPrice(value: i32) {
+    this.set("maxGasPrice", Value.fromI32(value));
+  }
+
+  get version(): i32 {
+    let value = this.get("version");
+    return value.toI32();
+  }
+
+  set version(value: i32) {
+    this.set("version", Value.fromI32(value));
+  }
+
+  get refundables(): Array<string> {
+    let value = this.get("refundables");
+    return value.toStringArray();
+  }
+
+  set refundables(value: Array<string>) {
+    this.set("refundables", Value.fromStringArray(value));
+  }
+
+  get deposits(): Array<string> {
+    let value = this.get("deposits");
+    return value.toStringArray();
+  }
+
+  set deposits(value: Array<string>) {
+    this.set("deposits", Value.fromStringArray(value));
+  }
+
+  get withdrawls(): Array<string> {
+    let value = this.get("withdrawls");
+    return value.toStringArray();
+  }
+
+  set withdrawls(value: Array<string>) {
+    this.set("withdrawls", Value.fromStringArray(value));
+  }
+
+  get refunds(): Array<string> {
+    let value = this.get("refunds");
+    return value.toStringArray();
+  }
+
+  set refunds(value: Array<string>) {
+    this.set("refunds", Value.fromStringArray(value));
+  }
+}
+
+export class Target extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Target entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Target entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Target", id.toString(), this);
+  }
+
+  static load(id: string): Target | null {
+    return store.get("Target", id) as Target | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get refundables(): Array<string> {
+    let value = this.get("refundables");
+    return value.toStringArray();
+  }
+
+  set refundables(value: Array<string>) {
+    this.set("refundables", Value.fromStringArray(value));
+  }
+}
+
+export class Refundable extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Refundable entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Refundable entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Refundable", id.toString(), this);
+  }
+
+  static load(id: string): Refundable | null {
+    return store.get("Refundable", id) as Refundable | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get refunder(): string {
+    let value = this.get("refunder");
+    return value.toString();
+  }
+
+  set refunder(value: string) {
+    this.set("refunder", Value.fromString(value));
+  }
+
+  get target(): string {
+    let value = this.get("target");
+    return value.toString();
+  }
+
+  set target(value: string) {
+    this.set("target", Value.fromString(value));
+  }
+
+  get identifier(): Bytes {
+    let value = this.get("identifier");
     return value.toBytes();
   }
 
-  set owner(value: Bytes) {
-    this.set("owner", Value.fromBytes(value));
+  set identifier(value: Bytes) {
+    this.set("identifier", Value.fromBytes(value));
   }
 
-  get displayName(): string {
-    let value = this.get("displayName");
+  get validatingContract(): Bytes {
+    let value = this.get("validatingContract");
+    return value.toBytes();
+  }
+
+  set validatingContract(value: Bytes) {
+    this.set("validatingContract", Value.fromBytes(value));
+  }
+
+  get validatingIdentifier(): Bytes {
+    let value = this.get("validatingIdentifier");
+    return value.toBytes();
+  }
+
+  set validatingIdentifier(value: Bytes) {
+    this.set("validatingIdentifier", Value.fromBytes(value));
+  }
+
+  get isRefundable(): boolean {
+    let value = this.get("isRefundable");
+    return value.toBoolean();
+  }
+
+  set isRefundable(value: boolean) {
+    this.set("isRefundable", Value.fromBoolean(value));
+  }
+
+  get refunds(): Array<string> {
+    let value = this.get("refunds");
+    return value.toStringArray();
+  }
+
+  set refunds(value: Array<string>) {
+    this.set("refunds", Value.fromStringArray(value));
+  }
+}
+
+export class Refund extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Refund entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Refund entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Refund", id.toString(), this);
+  }
+
+  static load(id: string): Refund | null {
+    return store.get("Refund", id) as Refund | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
     return value.toString();
   }
 
-  set displayName(value: string) {
-    this.set("displayName", Value.fromString(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
-  get imageUrl(): string {
-    let value = this.get("imageUrl");
+  get refundable(): string {
+    let value = this.get("refundable");
     return value.toString();
   }
 
-  set imageUrl(value: string) {
-    this.set("imageUrl", Value.fromString(value));
+  set refundable(value: string) {
+    this.set("refundable", Value.fromString(value));
+  }
+
+  get refunder(): string {
+    let value = this.get("refunder");
+    return value.toString();
+  }
+
+  set refunder(value: string) {
+    this.set("refunder", Value.fromString(value));
+  }
+
+  get caller(): Bytes {
+    let value = this.get("caller");
+    return value.toBytes();
+  }
+
+  set caller(value: Bytes) {
+    this.set("caller", Value.fromBytes(value));
+  }
+
+  get target(): Bytes {
+    let value = this.get("target");
+    return value.toBytes();
+  }
+
+  set target(value: Bytes) {
+    this.set("target", Value.fromBytes(value));
+  }
+
+  get identifier(): Bytes {
+    let value = this.get("identifier");
+    return value.toBytes();
+  }
+
+  set identifier(value: Bytes) {
+    this.set("identifier", Value.fromBytes(value));
+  }
+
+  get refund(): i32 {
+    let value = this.get("refund");
+    return value.toI32();
+  }
+
+  set refund(value: i32) {
+    this.set("refund", Value.fromI32(value));
+  }
+}
+
+export class Withdrawl extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Withdrawl entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Withdrawl entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Withdrawl", id.toString(), this);
+  }
+
+  static load(id: string): Withdrawl | null {
+    return store.get("Withdrawl", id) as Withdrawl | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get value(): i32 {
+    let value = this.get("value");
+    return value.toI32();
+  }
+
+  set value(value: i32) {
+    this.set("value", Value.fromI32(value));
+  }
+
+  get recipient(): Bytes {
+    let value = this.get("recipient");
+    return value.toBytes();
+  }
+
+  set recipient(value: Bytes) {
+    this.set("recipient", Value.fromBytes(value));
+  }
+
+  get refunder(): string {
+    let value = this.get("refunder");
+    return value.toString();
+  }
+
+  set refunder(value: string) {
+    this.set("refunder", Value.fromString(value));
+  }
+}
+
+export class Deposit extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Deposit entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Deposit entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Deposit", id.toString(), this);
+  }
+
+  static load(id: string): Deposit | null {
+    return store.get("Deposit", id) as Deposit | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get value(): i32 {
+    let value = this.get("value");
+    return value.toI32();
+  }
+
+  set value(value: i32) {
+    this.set("value", Value.fromI32(value));
+  }
+
+  get depositor(): Bytes {
+    let value = this.get("depositor");
+    return value.toBytes();
+  }
+
+  set depositor(value: Bytes) {
+    this.set("depositor", Value.fromBytes(value));
+  }
+
+  get refunder(): string {
+    let value = this.get("refunder");
+    return value.toString();
+  }
+
+  set refunder(value: string) {
+    this.set("refunder", Value.fromString(value));
   }
 }

@@ -1,22 +1,25 @@
 type Refunder @entity {
   id: ID! #contract Address of Refunder
-  registry: Registry!
   maxGasPrice: Int!
+  version: Int!
   refundables: [Refundable!]! @derivedFrom(field: "refunder")
   deposits: [Deposit!]! @derivedFrom(field: "refunder")
   withdrawls: [Withdrawl!]! @derivedFrom(field: "refunder")
   refunds: [Refund!]! @derivedFrom(field: "refunder")
 }
 
+type Target @entity {
+  id: ID!
+  refundables: [Refundable!]! @derivedFrom(field: "target")
+}
 type Refundable @entity{
-  id: ID! #contract address of Refunder .concat(z)
+  id: ID! #contract address of Refunder .concat( target) con
   refunder: Refunder!
-  target: Bytes!
+  target: Target!
   identifier: Bytes!
-  validatingContract: Bytes!
-  validatingIdentifier: Bytes!
-  isRefundable: Bool!
-  targetID: Target!
+  validatingContract: Bytes
+  validatingIdentifier: Bytes
+  isRefundable: Boolean!
   refunds: [Refund!]! @derivedFrom(field: "refundable")
 }
 
