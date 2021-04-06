@@ -14,6 +14,19 @@ import {
 
 import { constants } from "../utils/utils";
 
+export function handleOwnershipTransferred(event: OwnershipTransferred): void {
+    let refunder = Refunder.load(event.address.toHex())
+    // we don't care about the previous owner event property
+    refunder.owner = event.params.newOwner.toHex();
+    refunder.save()
+}
+
+export function handleGasPriceChange(event: GasPriceChange): void {
+    let refunder = Refunder.load(event.address.toHex())
+    refunder.maxGasPrice = event.params.newGasPrice;
+    refunder.save()
+}
+
 export function handlePaused(event: Paused): void {
     let refunder = Refunder.load(event.address.toHex())
     // technically the Paused event has an address of who paused it. This is not important here. 
