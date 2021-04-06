@@ -8,11 +8,33 @@ import {
   Paused,
   RefundableUpdate,
   RelayAndRefund,
+  RenounceOwnershipCall,
   Unpaused,
   Withdraw,
 } from "../../generated/Refunder/Refunder";
 
 import { constants } from "../utils/utils";
+
+export function handleRefundableUpdate(event: RefundableUpdate): void {
+
+    let target = event.params.targetContract.toHex()
+    let identifier = event.params.identifier.toHex()
+
+    let refundableID = event.address
+    .toHex()
+    .concat("-")
+    .concat(target)
+    .concat("-")
+    .concat(identifier);
+
+    let refundable = Refundable.load(refundableID);
+
+    refundable.isRefundable = event.params.isRefundable;
+    refundable.validatingContract = event.params.validatingContract;
+    refundable.validatingIdentifier = event.params.validatingIdentifier;
+
+    refundable.save()
+}
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {
     let refunder = Refunder.load(event.address.toHex())
