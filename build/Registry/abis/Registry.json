@@ -36,7 +36,7 @@
       {
         "indexed": true,
         "internalType": "bytes4",
-        "name": "interfaceId",
+        "name": "identifier",
         "type": "bytes4"
       },
       {

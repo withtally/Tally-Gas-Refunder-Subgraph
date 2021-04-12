@@ -115,46 +115,6 @@ export class Refunder extends Entity {
   }
 }
 
-export class Target extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id !== null, "Cannot save Target entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save Target entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("Target", id.toString(), this);
-  }
-
-  static load(id: string): Target | null {
-    return store.get("Target", id) as Target | null;
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get refundables(): Array<string> {
-    let value = this.get("refundables");
-    return value.toStringArray();
-  }
-
-  set refundables(value: Array<string>) {
-    this.set("refundables", Value.fromStringArray(value));
-  }
-}
-
 export class Refundable extends Entity {
   constructor(id: string) {
     super();

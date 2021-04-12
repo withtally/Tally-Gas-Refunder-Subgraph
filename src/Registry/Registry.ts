@@ -23,7 +23,7 @@ export function handleUpdateRefundable(event: UpdateRefundable): void {
     .concat("-")
     .concat(event.params.targetAddress.toHex())
     .concat("-")
-    .concat(event.params.interfaceId.toHex());
+    .concat(event.params.identifier.toHex());
 
   let refundable = Refundable.load(refundableID);
 
@@ -33,7 +33,7 @@ export function handleUpdateRefundable(event: UpdateRefundable): void {
 
   refundable.refunder = event.params.refunder.toHex();
   refundable.target = event.params.targetAddress.toHex();
-  refundable.identifier = event.params.interfaceId;
+  refundable.identifier = event.params.identifier;
   refundable.isRefundable = event.params.supported;
   refundable.save();
 }

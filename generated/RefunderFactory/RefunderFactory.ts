@@ -10,16 +10,16 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class CreateRefunder extends ethereum.Event {
-  get params(): CreateRefunder__Params {
-    return new CreateRefunder__Params(this);
+export class RefunderCreated extends ethereum.Event {
+  get params(): RefunderCreated__Params {
+    return new RefunderCreated__Params(this);
   }
 }
 
-export class CreateRefunder__Params {
-  _event: CreateRefunder;
+export class RefunderCreated__Params {
+  _event: RefunderCreated;
 
-  constructor(event: CreateRefunder) {
+  constructor(event: RefunderCreated) {
     this._event = event;
   }
 
@@ -37,30 +37,40 @@ export class RefunderFactory extends ethereum.SmartContract {
     return new RefunderFactory("RefunderFactory", address);
   }
 
-  createRefunder(masterRefunder: Address, version: i32): Address {
+  REFUNDER_VERSION(): i32 {
     let result = super.call(
-      "createRefunder",
-      "createRefunder(address,uint8):(address)",
-      [
-        ethereum.Value.fromAddress(masterRefunder),
-        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(version))
-      ]
+      "REFUNDER_VERSION",
+      "REFUNDER_VERSION():(uint8)",
+      []
     );
+
+    return result[0].toI32();
+  }
+
+  try_REFUNDER_VERSION(): ethereum.CallResult<i32> {
+    let result = super.tryCall(
+      "REFUNDER_VERSION",
+      "REFUNDER_VERSION():(uint8)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toI32());
+  }
+
+  createRefunder(): Address {
+    let result = super.call("createRefunder", "createRefunder():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_createRefunder(
-    masterRefunder: Address,
-    version: i32
-  ): ethereum.CallResult<Address> {
+  try_createRefunder(): ethereum.CallResult<Address> {
     let result = super.tryCall(
       "createRefunder",
-      "createRefunder(address,uint8):(address)",
-      [
-        ethereum.Value.fromAddress(masterRefunder),
-        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(version))
-      ]
+      "createRefunder():(address)",
+      []
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -130,14 +140,6 @@ export class CreateRefunderCall__Inputs {
 
   constructor(call: CreateRefunderCall) {
     this._call = call;
-  }
-
-  get masterRefunder(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get version(): i32 {
-    return this._call.inputValues[1].value.toI32();
   }
 }
 

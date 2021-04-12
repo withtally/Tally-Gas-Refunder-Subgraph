@@ -27,7 +27,7 @@ export class Deposit__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get value(): BigInt {
+  get amount(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 }
@@ -194,6 +194,20 @@ export class Withdraw__Params {
   }
 }
 
+export class Refunder__getRefundableResultValue0Struct extends ethereum.Tuple {
+  get isSupported(): boolean {
+    return this[0].toBoolean();
+  }
+
+  get validatingContract(): Address {
+    return this[1].toAddress();
+  }
+
+  get validatingIdentifier(): Bytes {
+    return this[2].toBytes();
+  }
+}
+
 export class Refunder__refundablesResult {
   value0: boolean;
   value1: Address;
@@ -219,20 +233,31 @@ export class Refunder extends ethereum.SmartContract {
     return new Refunder("Refunder", address);
   }
 
-  BASE_REFUND_TX_COST(): BigInt {
-    let result = super.call(
-      "BASE_REFUND_TX_COST",
-      "BASE_REFUND_TX_COST():(uint256)",
-      []
-    );
+  BASE_TX_COST(): BigInt {
+    let result = super.call("BASE_TX_COST", "BASE_TX_COST():(uint256)", []);
 
     return result[0].toBigInt();
   }
 
-  try_BASE_REFUND_TX_COST(): ethereum.CallResult<BigInt> {
+  try_BASE_TX_COST(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("BASE_TX_COST", "BASE_TX_COST():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  REFUND_OP_COST(): BigInt {
+    let result = super.call("REFUND_OP_COST", "REFUND_OP_COST():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_REFUND_OP_COST(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "BASE_REFUND_TX_COST",
-      "BASE_REFUND_TX_COST():(uint256)",
+      "REFUND_OP_COST",
+      "REFUND_OP_COST():(uint256)",
       []
     );
     if (result.reverted) {
@@ -242,27 +267,41 @@ export class Refunder extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  REFUND_OP_GAS_COST(): BigInt {
+  getRefundable(
+    target: Address,
+    identifier: Bytes
+  ): Refunder__getRefundableResultValue0Struct {
     let result = super.call(
-      "REFUND_OP_GAS_COST",
-      "REFUND_OP_GAS_COST():(uint256)",
-      []
+      "getRefundable",
+      "getRefundable(address,bytes4):((bool,address,bytes4))",
+      [
+        ethereum.Value.fromAddress(target),
+        ethereum.Value.fromFixedBytes(identifier)
+      ]
     );
 
-    return result[0].toBigInt();
+    return result[0].toTuple() as Refunder__getRefundableResultValue0Struct;
   }
 
-  try_REFUND_OP_GAS_COST(): ethereum.CallResult<BigInt> {
+  try_getRefundable(
+    target: Address,
+    identifier: Bytes
+  ): ethereum.CallResult<Refunder__getRefundableResultValue0Struct> {
     let result = super.tryCall(
-      "REFUND_OP_GAS_COST",
-      "REFUND_OP_GAS_COST():(uint256)",
-      []
+      "getRefundable",
+      "getRefundable(address,bytes4):((bool,address,bytes4))",
+      [
+        ethereum.Value.fromAddress(target),
+        ethereum.Value.fromFixedBytes(identifier)
+      ]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(
+      value[0].toTuple() as Refunder__getRefundableResultValue0Struct
+    );
   }
 
   maxGasPrice(): BigInt {
@@ -403,36 +442,32 @@ export class Refunder extends ethereum.SmartContract {
   }
 }
 
-export class InitCall extends ethereum.Call {
-  get inputs(): InitCall__Inputs {
-    return new InitCall__Inputs(this);
+export class ConstructorCall extends ethereum.Call {
+  get inputs(): ConstructorCall__Inputs {
+    return new ConstructorCall__Inputs(this);
   }
 
-  get outputs(): InitCall__Outputs {
-    return new InitCall__Outputs(this);
+  get outputs(): ConstructorCall__Outputs {
+    return new ConstructorCall__Outputs(this);
   }
 }
 
-export class InitCall__Inputs {
-  _call: InitCall;
+export class ConstructorCall__Inputs {
+  _call: ConstructorCall;
 
-  constructor(call: InitCall) {
+  constructor(call: ConstructorCall) {
     this._call = call;
   }
 
-  get owner_(): Address {
+  get _registry(): Address {
     return this._call.inputValues[0].value.toAddress();
-  }
-
-  get registry_(): Address {
-    return this._call.inputValues[1].value.toAddress();
   }
 }
 
-export class InitCall__Outputs {
-  _call: InitCall;
+export class ConstructorCall__Outputs {
+  _call: ConstructorCall;
 
-  constructor(call: InitCall) {
+  constructor(call: ConstructorCall) {
     this._call = call;
   }
 }

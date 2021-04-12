@@ -6,9 +6,10 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Registry
-    network: mainnet
+    network: ropsten
     source:
-      address: '0x2E645469f354BB4F5c8a05B3b30A929361cf77eB'
+      address: '0xFB2120EE5C0313e79C06DEfFeE81CEca6BDe229C'
+      startBlock: 10005296
       abi: Registry
     mapping:
       kind: ethereum/events
@@ -28,9 +29,10 @@ dataSources:
       file: ./src/mapping.ts
   - kind: ethereum/contract
     name: RefunderFactory
-    network: mainnet
+    network: ropsten
     source:
-      address: '0x2E645469f354BB4F5c8a05B3b30A929361cf77eB'
+      address: '0xB5A62b20551b88623c8ef082af3b8c929d89f221'
+      startBlock: 10005306
       abi: RefunderFactory
     mapping:
       kind: ethereum/events
@@ -42,14 +44,15 @@ dataSources:
         - name: RefunderFactory
           file: ./abis/RefunderFactory.json
       eventHandlers:
-        - event: CreateRefunder(indexed address,indexed address)
+        - event: RefunderCreated(indexed address,indexed address)
           handler: handleCreateRefunder
       file: ./src/mapping.ts
   - kind: ethereum/contract
     name: Refunder
-    network: mainnet
+    network: ropsten
     source:
-      address: '0x2E645469f354BB4F5c8a05B3b30A929361cf77eB'
+      address: '0xA3C41DF78a91F188E6570D635b7c7Ce0A4e7Dc58'
+      startBlock: 10005350
       abi: Refunder
     mapping:
       kind: ethereum/events

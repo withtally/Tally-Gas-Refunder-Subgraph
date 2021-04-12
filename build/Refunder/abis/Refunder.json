@@ -1,5 +1,16 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_registry",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -11,7 +22,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "value",
+        "name": "amount",
         "type": "uint256"
       }
     ],
@@ -165,7 +176,7 @@
   },
   {
     "inputs": [],
-    "name": "BASE_REFUND_TX_COST",
+    "name": "BASE_TX_COST",
     "outputs": [
       {
         "internalType": "uint256",
@@ -178,7 +189,7 @@
   },
   {
     "inputs": [],
-    "name": "REFUND_OP_GAS_COST",
+    "name": "REFUND_OP_COST",
     "outputs": [
       {
         "internalType": "uint256",
@@ -193,18 +204,41 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "owner_",
+        "name": "target",
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "registry_",
-        "type": "address"
+        "internalType": "bytes4",
+        "name": "identifier",
+        "type": "bytes4"
       }
     ],
-    "name": "init",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "getRefundable",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "isSupported",
+            "type": "bool"
+          },
+          {
+            "internalType": "address",
+            "name": "validatingContract",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes4",
+            "name": "validatingIdentifier",
+            "type": "bytes4"
+          }
+        ],
+        "internalType": "struct Refunder.Refundable",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

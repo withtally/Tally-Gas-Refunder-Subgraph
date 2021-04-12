@@ -26,22 +26,24 @@
         "type": "address"
       }
     ],
-    "name": "CreateRefunder",
+    "name": "RefunderCreated",
     "type": "event"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "masterRefunder",
-        "type": "address"
-      },
+    "inputs": [],
+    "name": "REFUNDER_VERSION",
+    "outputs": [
       {
         "internalType": "uint8",
-        "name": "version",
+        "name": "",
         "type": "uint8"
       }
     ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "createRefunder",
     "outputs": [
       {

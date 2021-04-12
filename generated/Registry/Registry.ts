@@ -53,7 +53,7 @@ export class UpdateRefundable__Params {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get interfaceId(): Bytes {
+  get identifier(): Bytes {
     return this._event.parameters[2].value.toBytes();
   }
 
