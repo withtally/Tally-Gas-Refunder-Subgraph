@@ -78,6 +78,42 @@ export class Refunder extends Entity {
     this.set("isPaused", Value.fromBoolean(value));
   }
 
+  get balance(): BigInt {
+    let value = this.get("balance");
+    return value.toBigInt();
+  }
+
+  set balance(value: BigInt) {
+    this.set("balance", Value.fromBigInt(value));
+  }
+
+  get refundCount(): BigInt {
+    let value = this.get("refundCount");
+    return value.toBigInt();
+  }
+
+  set refundCount(value: BigInt) {
+    this.set("refundCount", Value.fromBigInt(value));
+  }
+
+  get depositCount(): BigInt {
+    let value = this.get("depositCount");
+    return value.toBigInt();
+  }
+
+  set depositCount(value: BigInt) {
+    this.set("depositCount", Value.fromBigInt(value));
+  }
+
+  get withdrawlCount(): BigInt {
+    let value = this.get("withdrawlCount");
+    return value.toBigInt();
+  }
+
+  set withdrawlCount(value: BigInt) {
+    this.set("withdrawlCount", Value.fromBigInt(value));
+  }
+
   get refundables(): Array<string> {
     let value = this.get("refundables");
     return value.toStringArray();

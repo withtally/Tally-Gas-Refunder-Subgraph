@@ -21,6 +21,8 @@ dataSources:
       abis:
         - name: Registry
           file: Registry/abis/Registry.json
+        - name: Refunder
+          file: Registry/abis/Refunder.json
       eventHandlers:
         - event: Register(indexed address,uint8)
           handler: handleRegister
@@ -43,6 +45,8 @@ dataSources:
       abis:
         - name: RefunderFactory
           file: RefunderFactory/abis/RefunderFactory.json
+        - name: Refunder
+          file: RefunderFactory/abis/Refunder.json
       eventHandlers:
         - event: RefunderCreated(indexed address,indexed address)
           handler: handleCreateRefunder

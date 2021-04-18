@@ -33,7 +33,7 @@ contract RefunderFactory {
         refunder.transferOwnership(msg.sender);
 
         IRegistry(registry).register(address(refunder), REFUNDER_VERSION);
-
+    
         emit RefunderCreated(msg.sender, address(refunder));
         return address(refunder);
     }
