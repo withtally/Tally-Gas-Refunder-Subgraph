@@ -21,7 +21,7 @@ import { constants } from "../utils/utils";
 export function handleRelayAndRefund(event: RelayAndRefund): void {
     let target = event.params.target.toHex();
     let identifier = event.params.identifier.toHex();
-    let refunder = getRefunder(event.address.toHex(), event.address)
+    let refunder = getRefunder(event.address)
 
     let refundableID = event.address
     .toHex()
@@ -68,34 +68,34 @@ export function handleRefundableUpdate(event: RefundableUpdate): void {
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {
-    let refunder = getRefunder(event.address.toHex(), event.address)
+    let refunder = getRefunder(event.address)
     // we don't care about the previous owner event property
     refunder.owner = event.params.newOwner.toHex();
     refunder.save()
 }
 
 export function handleGasPriceChange(event: GasPriceChange): void {
-    let refunder = getRefunder(event.address.toHex(), event.address)
+    let refunder = getRefunder(event.address)
     refunder.maxGasPrice = event.params.newGasPrice;
     refunder.save()
 }
 
 export function handlePaused(event: Paused): void {
-    let refunder = getRefunder(event.address.toHex(), event.address)
+    let refunder = getRefunder(event.address)
     // technically the Paused event has an address of who paused it. This is not important here. 
     refunder.isPaused = true;
     refunder.save()
 }
 
 export function handleUnPaused(event: Unpaused): void {
-    let refunder = getRefunder(event.address.toHex(), event.address)
+    let refunder = getRefunder(event.address)
     // technically the unPaused event has an address of who paused it. This is not important here. 
     refunder.isPaused = false;
     refunder.save()
 }
 
 export function handleWithdraw(event: Withdraw): void {
-    let refunder = getRefunder(event.address.toHex(), event.address)
+    let refunder = getRefunder(event.address)
     let withdraw = new Withdrawl(event.transaction.hash.toHex().concat(event.transactionLogIndex.toHexString()));
 
     withdraw.recipient = event.params.recipient;
@@ -110,7 +110,7 @@ export function handleWithdraw(event: Withdraw): void {
 }
 
 export function handleDeposit(event: Deposit): void {
-    let refunder = getRefunder(event.address.toHex(), event.address)
+    let refunder = getRefunder(event.address)
     let deposit = new DepositEntity(event.transaction.hash.toHex().concat(event.transactionLogIndex.toHexString()));
 
     deposit.value = event.params.amount;

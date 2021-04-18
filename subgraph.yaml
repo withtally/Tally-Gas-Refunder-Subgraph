@@ -51,12 +51,11 @@ dataSources:
         - event: RefunderCreated(indexed address,indexed address)
           handler: handleCreateRefunder
       file: ./src/mapping.ts
+templates:
   - kind: ethereum/contract
     name: Refunder
     network: ropsten
     source:
-      address: '0xA3C41DF78a91F188E6570D635b7c7Ce0A4e7Dc58'
-      startBlock: 10005350
       abi: Refunder
     mapping:
       kind: ethereum/events

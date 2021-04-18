@@ -3,10 +3,10 @@ import { constants } from "./utils";
 import { Refunder as RefunderContract } from "../../generated/Refunder/Refunder"
 import { Address, log } from "@graphprotocol/graph-ts";
 
-export function getRefunder(id: string, sourceAddress: Address): Refunder {
-    let refunder = Refunder.load(id)
+export function getRefunder(id: Address): Refunder {
+    let refunder = Refunder.load(id.toHex())
     if (refunder == null) {
-        refunder = new Refunder(id);
+        refunder = new Refunder(id.toHex());
         refunder.maxGasPrice = constants.BIGINT_ZERO;
         refunder.version = constants.BIGINT_ZERO;
         refunder.isPaused = false;
@@ -15,7 +15,7 @@ export function getRefunder(id: string, sourceAddress: Address): Refunder {
         refunder.depositCount = constants.BIGINT_ZERO;
         refunder.withdrawlCount = constants.BIGINT_ZERO;
 
-        let instance = RefunderContract.bind(sourceAddress)
+        let instance = RefunderContract.bind(id)
         refunder.owner = instance.owner().toHex();
       }
       log.warning("Refunder Created: {}", [refunder.id])
