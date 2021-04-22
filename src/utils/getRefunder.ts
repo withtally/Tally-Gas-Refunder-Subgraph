@@ -14,7 +14,7 @@ export function getRefunder(id: Address): Refunder {
         refunder.refundCount = constants.BIGINT_ZERO;
         refunder.depositCount = constants.BIGINT_ZERO;
         refunder.withdrawlCount = constants.BIGINT_ZERO;
-
+        refunder.refundableCount = constants.BIGINT_ZERO;
         let instance = RefunderContract.bind(id)
         refunder.owner = instance.owner().toHex();
       }

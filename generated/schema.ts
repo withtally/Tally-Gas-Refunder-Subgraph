@@ -114,6 +114,15 @@ export class Refunder extends Entity {
     this.set("withdrawlCount", Value.fromBigInt(value));
   }
 
+  get refundableCount(): BigInt {
+    let value = this.get("refundableCount");
+    return value.toBigInt();
+  }
+
+  set refundableCount(value: BigInt) {
+    this.set("refundableCount", Value.fromBigInt(value));
+  }
+
   get refundables(): Array<string> {
     let value = this.get("refundables");
     return value.toStringArray();

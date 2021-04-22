@@ -11,13 +11,15 @@ import {
   handlePaused,
   handleDeposit,
   handleWithdraw,
-  handleRelayAndRefund
+  handleRelayAndRefund,
+  handleUnpaused
 } from "./Refunder/Refunder";
 export {
   handleRefundableUpdate,
   handleOwnershipTransferred,
   handleGasPriceChange,
   handlePaused,
+  handleUnpaused,
   handleDeposit,
   handleWithdraw,
   handleRelayAndRefund

@@ -48,6 +48,8 @@ export function handleRelayAndRefund(event: RelayAndRefund): void {
 
 export function handleRefundableUpdate(event: RefundableUpdate): void {
 
+    let refunder = getRefunder(event.address)
+
     let target = event.params.targetContract.toHex()
     let identifier = event.params.identifier.toHex()
 
@@ -59,12 +61,18 @@ export function handleRefundableUpdate(event: RefundableUpdate): void {
     .concat(identifier);
 
     let refundable = Refundable.load(refundableID);
+    if(refundable == null){
+        refundable = new Refundable(refundableID);
+    }
+    
+    refunder.refundableCount = refunder.refundCount.plus(constants.BIGINT_ONE)
 
     refundable.isRefundable = event.params.isRefundable;
     refundable.validatingContract = event.params.validatingContract;
     refundable.validatingIdentifier = event.params.validatingIdentifier;
 
     refundable.save()
+    refunder.save()
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {
@@ -87,7 +95,7 @@ export function handlePaused(event: Paused): void {
     refunder.save()
 }
 
-export function handleUnPaused(event: Unpaused): void {
+export function handleUnpaused(event: Unpaused): void {
     let refunder = getRefunder(event.address)
     // technically the unPaused event has an address of who paused it. This is not important here. 
     refunder.isPaused = false;

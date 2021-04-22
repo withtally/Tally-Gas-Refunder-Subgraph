@@ -8,6 +8,7 @@ type Refunder @entity {
   refundCount: BigInt!
   depositCount: BigInt!
   withdrawlCount: BigInt!
+  refundableCount: BigInt!
   refundables: [Refundable!]! @derivedFrom(field: "refunder")
   deposits: [Deposit!]! @derivedFrom(field: "refunder")
   withdrawls: [Withdrawl!]! @derivedFrom(field: "refunder")
