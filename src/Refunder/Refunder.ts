@@ -38,6 +38,7 @@ export function handleRelayAndRefund(event: RelayAndRefund): void {
     refund.target = target;
     refund.identifier = identifier;
     refund.refund = event.params.refundAmount;
+    refund.txHash = event.transaction.hash;
 
     refunder.balance = refunder.balance.minus(event.params.refundAmount);
     refunder.refundCount = refunder.refundCount.plus(constants.BIGINT_ONE)
@@ -64,7 +65,7 @@ export function handleRefundableUpdate(event: RefundableUpdate): void {
     if(refundable == null){
         refundable = new Refundable(refundableID);
     }
-    
+
     refunder.refundableCount = refunder.refundCount.plus(constants.BIGINT_ONE)
 
     refundable.isRefundable = event.params.isRefundable;
@@ -109,6 +110,7 @@ export function handleWithdraw(event: Withdraw): void {
     withdraw.recipient = event.params.recipient;
     withdraw.refunder = event.address.toHex();
     withdraw.value = event.params.amount;
+    withdraw.txHash = event.transaction.hash;
 
     refunder.balance = refunder.balance.minus(event.params.amount);
     refunder.withdrawlCount = refunder.withdrawlCount.plus(constants.BIGINT_ONE);
@@ -124,6 +126,7 @@ export function handleDeposit(event: Deposit): void {
     deposit.value = event.params.amount;
     deposit.depositor = event.params.depositor;
     deposit.refunder = event.address.toHex();
+    deposit.txHash = event.transaction.hash
 
     refunder.balance = refunder.balance.plus(event.params.amount);
     refunder.depositCount = refunder.depositCount.plus(constants.BIGINT_ONE);

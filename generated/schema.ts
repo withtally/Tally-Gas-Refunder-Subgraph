@@ -353,6 +353,15 @@ export class Refund extends Entity {
   set refund(value: BigInt) {
     this.set("refund", Value.fromBigInt(value));
   }
+
+  get txHash(): Bytes {
+    let value = this.get("txHash");
+    return value.toBytes();
+  }
+
+  set txHash(value: Bytes) {
+    this.set("txHash", Value.fromBytes(value));
+  }
 }
 
 export class Withdrawl extends Entity {
@@ -411,6 +420,15 @@ export class Withdrawl extends Entity {
   set refunder(value: string) {
     this.set("refunder", Value.fromString(value));
   }
+
+  get txHash(): Bytes {
+    let value = this.get("txHash");
+    return value.toBytes();
+  }
+
+  set txHash(value: Bytes) {
+    this.set("txHash", Value.fromBytes(value));
+  }
 }
 
 export class Deposit extends Entity {
@@ -468,5 +486,14 @@ export class Deposit extends Entity {
 
   set refunder(value: string) {
     this.set("refunder", Value.fromString(value));
+  }
+
+  get txHash(): Bytes {
+    let value = this.get("txHash");
+    return value.toBytes();
+  }
+
+  set txHash(value: Bytes) {
+    this.set("txHash", Value.fromBytes(value));
   }
 }

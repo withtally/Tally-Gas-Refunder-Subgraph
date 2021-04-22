@@ -34,6 +34,7 @@ type Refund @entity {
   target: String!
   identifier: String!
   refund: BigInt!
+  txHash: Bytes!
 }
 
 type Withdrawl @entity {
@@ -41,6 +42,7 @@ type Withdrawl @entity {
   value: BigInt!
   recipient: Bytes!
   refunder: Refunder!
+  txHash: Bytes!
 }
 
 type Deposit @entity {
@@ -48,4 +50,5 @@ type Deposit @entity {
   value: BigInt!
   depositor: Bytes!
   refunder: Refunder!
+  txHash: Bytes!
 }
